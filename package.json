@@ -1,0 +1,12 @@
+{
+  "name": "jubbio-sdk",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "build:core": "npm run build -w packages/jubbio-auth",
+    "build:react": "npm run build -w packages/jubbio-auth-react"
+  }
+}

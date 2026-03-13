@@ -1,0 +1,29 @@
+{
+  "name": "jubbio-auth",
+  "version": "1.0.0",
+  "description": "Jubbio OAuth2 SDK - Add 'Sign in with Jubbio' to your app",
+  "main": "dist/jubbio-auth.cjs.js",
+  "module": "dist/jubbio-auth.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "jubbio",
+    "oauth2",
+    "authentication",
+    "login",
+    "sdk"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "rollup": "^4.9.0",
+    "@rollup/plugin-typescript": "^11.1.0",
+    "typescript": "^5.3.0",
+    "tslib": "^2.6.0"
+  }
+}
