@@ -1,24 +1,24 @@
-# jubbio-auth-react
+# @jubbio/auth-react
 
-Jubbio OAuth2 için React component'leri.
+React components for Jubbio OAuth2 authentication.
 
-## Kurulum
+## Installation
 
 ```bash
-npm install jubbio-auth jubbio-auth-react
+npm install @jubbio/auth @jubbio/auth-react
 ```
 
-## Kullanım
+## Usage
 
-### 1. Provider ile sar
+### 1. Wrap your app with the provider
 
 ```jsx
-import { JubbioProvider } from 'jubbio-auth-react';
+import { JubbioProvider } from '@jubbio/auth-react';
 
 function App() {
   return (
     <JubbioProvider config={{
-      clientId: 'APP_CLIENT_ID',
+      clientId: 'YOUR_CLIENT_ID',
       redirectUri: 'http://localhost:5173/callback',
       scopes: ['identify', 'email']
     }}>
@@ -28,79 +28,79 @@ function App() {
 }
 ```
 
-### 2. Login butonu ekle
+### 2. Add a login button
 
 ```jsx
-import { JubbioLoginButton } from 'jubbio-auth-react';
+import { JubbioLoginButton } from '@jubbio/auth-react';
 
 function LoginPage() {
   return <JubbioLoginButton />;
 }
 
-// Özelleştirmeler
+// Customization
 <JubbioLoginButton theme="dark" size="large" />
 <JubbioLoginButton theme="light" label="Sign in with Jubbio" />
 <JubbioLoginButton fullWidth />
 ```
 
-### 3. Callback sayfası
+### 3. Handle the callback
 
 ```jsx
-import { JubbioCallback } from 'jubbio-auth-react';
+import { JubbioCallback } from '@jubbio/auth-react';
 
 function CallbackPage() {
   return (
     <JubbioCallback
       successRedirect="/"
-      onSuccess={(result) => console.log('Giriş başarılı:', result.user)}
-      onError={(err) => console.error('Hata:', err)}
+      onSuccess={(result) => console.log('Logged in:', result.user)}
+      onError={(err) => console.error('Error:', err)}
     />
   );
 }
 ```
 
-### 4. Hook ile kullanıcı bilgisi
+### 4. Access user data with the hook
 
 ```jsx
-import { useJubbio } from 'jubbio-auth-react';
+import { useJubbio } from '@jubbio/auth-react';
 
 function Profile() {
   const { user, isLoggedIn, logout } = useJubbio();
 
-  if (!isLoggedIn) return <p>Giriş yapılmamış</p>;
+  if (!isLoggedIn) return <p>Not logged in</p>;
 
   return (
     <div>
-      <p>Hoş geldin, {user?.display_name || user?.username}</p>
-      <button onClick={logout}>Çıkış Yap</button>
+      <p>Welcome, {user?.display_name || user?.username}</p>
+      <button onClick={logout}>Sign Out</button>
     </div>
   );
 }
 ```
 
-## Component'ler
+## Components
 
 ### `<JubbioLoginButton />`
 
-| Prop | Tip | Varsayılan | Açıklama |
-|------|-----|-----------|----------|
-| `label` | string | "Jubbio ile Giriş Yap" | Buton yazısı |
-| `size` | "small" \| "medium" \| "large" | "medium" | Boyut |
-| `theme` | "brand" \| "dark" \| "light" | "brand" | Renk teması |
-| `showLogo` | boolean | true | Logo göster |
-| `fullWidth` | boolean | false | Tam genişlik |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `label` | string | "Jubbio ile Giriş Yap" | Button text |
+| `size` | "small" \| "medium" \| "large" | "medium" | Size variant |
+| `theme` | "brand" \| "dark" \| "light" | "brand" | Color theme |
+| `showLogo` | boolean | true | Show Jubbio logo |
+| `fullWidth` | boolean | false | Full width button |
 
 ### `<JubbioCallback />`
 
-| Prop | Tip | Varsayılan | Açıklama |
-|------|-----|-----------|----------|
-| `successRedirect` | string | "/" | Başarılı giriş sonrası yönlendirme |
-| `redirectDelay` | number | 1500 | Yönlendirme gecikmesi (ms) |
-| `onSuccess` | function | - | Başarı callback'i |
-| `onError` | function | - | Hata callback'i |
-| `loadingComponent` | ReactNode | - | Özel loading UI |
-| `successComponent` | function | - | Özel başarı UI |
-| `errorComponent` | function | - | Özel hata UI |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `successRedirect` | string | "/" | Redirect URL after success |
+| `redirectDelay` | number | 1500 | Delay before redirect (ms) |
+| `onSuccess` | function | — | Success callback |
+| `onError` | function | — | Error callback |
+| `loadingComponent` | ReactNode | — | Custom loading UI |
+| `successComponent` | function | — | Custom success UI |
+| `errorComponent` | function | — | Custom error UI |
 
 ### `useJubbio()` Hook
 

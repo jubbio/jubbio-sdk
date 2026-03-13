@@ -1,122 +1,118 @@
-# jubbio-auth
+# @jubbio/auth
 
-Jubbio OAuth2 SDK — Uygulamanıza "Jubbio ile Giriş Yap" butonu ekleyin.
+Jubbio OAuth2 SDK — Add "Sign in with Jubbio" to your app.
 
-## Kurulum
+## Installation
 
 ```bash
-npm install jubbio-auth
+npm install @jubbio/auth
 ```
 
-## Hızlı Başlangıç
+## Quick Start
 
 ```js
-import { JubbioAuth } from 'jubbio-auth';
+import { JubbioAuth } from '@jubbio/auth';
 
 const auth = new JubbioAuth({
-  clientId: 'APP_CLIENT_ID',
+  clientId: 'YOUR_CLIENT_ID',
   redirectUri: 'https://myapp.com/callback',
   scopes: ['identify', 'email', 'guilds']
 });
 ```
 
-### Giriş Butonu
+### Login Button
 
 ```jsx
 <button onClick={() => auth.login()}>
-  Jubbio ile Giriş Yap
+  Sign in with Jubbio
 </button>
 ```
 
-### Callback Sayfası
+### Callback Page
 
 ```js
-// /callback sayfasında
+// On your /callback page
 const { user, tokens } = await auth.handleCallback();
-console.log(`Hoşgeldin, ${user.display_name || user.username}!`);
+console.log(`Welcome, ${user.display_name || user.username}!`);
 ```
 
-## React Örneği
+## Built-in UI
 
-```jsx
-import { JubbioAuth } from 'jubbio-auth';
-import { useEffect, useState } from 'react';
+### Vanilla JS — Render a login button
 
-const auth = new JubbioAuth({
-  clientId: 'APP_CLIENT_ID',
-  redirectUri: 'http://localhost:5173/callback',
-  scopes: ['identify', 'email']
+```js
+import { JubbioAuth, renderLoginButton } from '@jubbio/auth';
+
+const auth = new JubbioAuth({ clientId: '...', redirectUri: '...' });
+
+renderLoginButton('#login-container', auth, {
+  label: 'Sign in with Jubbio',
+  theme: 'brand',   // 'brand' | 'dark' | 'light'
+  size: 'medium'     // 'small' | 'medium' | 'large'
 });
-
-// Login butonu
-function LoginButton() {
-  return (
-    <button onClick={() => auth.login()}>
-      Jubbio ile Giriş Yap
-    </button>
-  );
-}
-
-// Callback sayfası
-function CallbackPage() {
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    auth.handleCallback()
-      .then(({ user }) => setUser(user))
-      .catch(err => setError(err.message));
-  }, []);
-
-  if (error) return <div>Hata: {error}</div>;
-  if (!user) return <div>Giriş yapılıyor...</div>;
-  return <div>Hoşgeldin, {user.display_name || user.username}!</div>;
-}
 ```
+
+### Vanilla JS — Handle callback page
+
+```js
+import { JubbioAuth, handleCallbackPage } from '@jubbio/auth';
+
+const auth = new JubbioAuth({ clientId: '...', redirectUri: '...' });
+
+handleCallbackPage(auth, {
+  successRedirect: '/',
+  onSuccess: (result) => console.log('Logged in:', result.user),
+  onError: (err) => console.error('Failed:', err)
+});
+```
+
+## React
+
+For React projects, use [`@jubbio/auth-react`](https://www.npmjs.com/package/@jubbio/auth-react) which provides ready-made components and hooks.
 
 ## API
 
 ### `new JubbioAuth(config)`
 
-| Parametre | Tip | Zorunlu | Açıklama |
-|-----------|-----|---------|----------|
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
 | `clientId` | string | ✅ | OAuth2 Client ID |
 | `redirectUri` | string | ✅ | Callback URL |
-| `scopes` | string[] | ❌ | İstenen izinler (varsayılan: `['identify']`) |
-| `baseUrl` | string | ❌ | API URL (varsayılan: `https://api.jubbio.com`) |
-| `popup` | boolean | ❌ | Popup pencere kullan (varsayılan: `false`) |
-| `autoStore` | boolean | ❌ | Token'ları localStorage'a kaydet (varsayılan: `true`) |
+| `scopes` | string[] | ❌ | Requested scopes (default: `['identify']`) |
+| `baseUrl` | string | ❌ | API URL (default: `https://api.jubbio.com`) |
+| `popup` | boolean | ❌ | Use popup window (default: `false`) |
+| `autoStore` | boolean | ❌ | Store tokens in localStorage (default: `true`) |
 
-### Metodlar
+### Methods
 
-| Metod | Açıklama |
-|-------|----------|
-| `login()` | OAuth2 giriş akışını başlatır |
-| `handleCallback()` | Callback URL'ini işler, `{ user, tokens }` döner |
-| `getUser()` | Kullanıcı bilgilerini getirir |
-| `getGuilds()` | Kullanıcının sunucularını listeler |
-| `getConnections()` | Bağlı hesapları getirir |
-| `getRelationships()` | Arkadaş listesini getirir |
-| `isLoggedIn()` | Giriş durumunu kontrol eder |
-| `getAccessToken()` | Kayıtlı access token'ı döner |
-| `refreshToken(secret)` | Token yeniler (server-side) |
-| `logout()` | Oturumu kapatır |
+| Method | Description |
+|--------|-------------|
+| `login()` | Start the OAuth2 login flow |
+| `handleCallback()` | Process callback URL, returns `{ user, tokens }` |
+| `getUser()` | Fetch current user info |
+| `getGuilds()` | List user's guilds |
+| `getConnections()` | Fetch connected accounts |
+| `getRelationships()` | Fetch friend list |
+| `isLoggedIn()` | Check login status |
+| `getAccessToken()` | Get stored access token |
+| `refreshToken(secret?)` | Refresh the access token |
+| `logout()` | Clear stored tokens |
 
-### Scope'lar
+### Scopes
 
-| Scope | Açıklama |
-|-------|----------|
-| `identify` | Kullanıcı adı, avatar, ID |
-| `email` | E-posta adresi |
-| `guilds` | Sunucu listesi |
-| `guilds.members.read` | Sunucu üyeleri |
-| `connections` | Bağlı hesaplar |
-| `relationships.read` | Arkadaş listesi |
+| Scope | Description |
+|-------|-------------|
+| `identify` | Username, avatar, ID |
+| `email` | Email address |
+| `guilds` | Guild list |
+| `guilds.members.read` | Guild members |
+| `connections` | Connected accounts |
+| `relationships.read` | Friend list |
 
-## Güvenlik
+## Security
 
-- PKCE (S256) otomatik kullanılır
-- State parametresi ile CSRF koruması
-- Token'lar localStorage'da saklanır
-- Access token süresi: 1 saat
-- Refresh token rotation aktif (her yenilemede yeni token)
+- PKCE (S256) is used automatically
+- CSRF protection via state parameter
+- Tokens stored in localStorage
+- Access token lifetime: 1 hour
+- Refresh token rotation enabled (new token on every refresh)

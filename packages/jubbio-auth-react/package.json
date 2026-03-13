@@ -1,11 +1,13 @@
 {
-  "name": "jubbio-auth-react",
-  "version": "1.0.0",
+  "name": "@jubbio/auth-react",
+  "version": "1.0.1",
   "description": "React components for Jubbio OAuth2 — Sign in with Jubbio",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rollup -c",
     "prepublishOnly": "npm run build"
@@ -13,7 +15,7 @@
   "peerDependencies": {
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0",
-    "jubbio-auth": "workspace:*"
+    "@jubbio/auth": "^1.0.0"
   },
   "devDependencies": {
     "react": "^18.2.0",
@@ -24,6 +26,12 @@
     "typescript": "^5.3.0",
     "tslib": "^2.6.0"
   },
-  "keywords": ["jubbio", "oauth2", "react", "login", "authentication"],
+  "keywords": [
+    "jubbio",
+    "oauth2",
+    "react",
+    "login",
+    "authentication"
+  ],
   "license": "MIT"
 }

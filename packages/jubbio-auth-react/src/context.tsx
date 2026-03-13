@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState, useEffect, type ReactNode } from 'react';
-import { JubbioAuth, type JubbioAuthConfig, type JubbioUser } from 'jubbio-auth';
+import { JubbioAuth, type JubbioAuthConfig, type JubbioUser } from '@jubbio/auth';
 
 interface JubbioContextValue {
   auth: JubbioAuth;

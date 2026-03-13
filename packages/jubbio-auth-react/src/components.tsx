@@ -1,5 +1,6 @@
 import { useCallback, useState, useEffect, type CSSProperties, type ReactNode } from 'react';
 import { useJubbio } from './context';
+import type { CallbackResult } from '@jubbio/auth';
 
 // ─── Brand Colors ───
 
@@ -134,7 +135,7 @@ export interface JubbioCallbackProps {
   /** Custom error component */
   errorComponent?: (error: string) => ReactNode;
   /** Callback on success */
-  onSuccess?: (result: any) => void;
+  onSuccess?: (result: CallbackResult) => void;
   /** Callback on error */
   onError?: (error: Error) => void;
 }
@@ -155,14 +156,14 @@ export function JubbioCallback({
 
   useEffect(() => {
     auth.handleCallback()
-      .then(result => {
+      .then((result: CallbackResult) => {
         setUser(result.user);
         setUsername(result.user.display_name || result.user.username);
         setStatus('success');
         onSuccess?.(result);
         setTimeout(() => { window.location.href = successRedirect; }, redirectDelay);
       })
-      .catch(err => {
+      .catch((err: Error) => {
         setErrorMsg(err.message);
         setStatus('error');
         onError?.(err);

@@ -7,4 +7,4 @@ export {
 } from './components';
 
 // Re-export core types for convenience
-export type { JubbioAuthConfig, JubbioUser, JubbioGuild, TokenResponse, CallbackResult } from 'jubbio-auth';
+export type { JubbioAuthConfig, JubbioUser, JubbioGuild, TokenResponse, CallbackResult } from '@jubbio/auth';

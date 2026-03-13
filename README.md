@@ -1,22 +1,22 @@
 # Jubbio SDK
 
-Jubbio OAuth2 entegrasyonu için resmi SDK paketleri.
+Official SDK packages for Jubbio OAuth2 integration.
 
-## Paketler
+## Packages
 
-| Paket | Açıklama | npm |
-|-------|----------|-----|
-| [`jubbio-auth`](packages/jubbio-auth) | Core SDK — vanilla JS, framework-agnostic | `npm i jubbio-auth` |
-| [`jubbio-auth-react`](packages/jubbio-auth-react) | React component'leri ve hook'lar | `npm i jubbio-auth-react` |
+| Package | Description | Install |
+|---------|-------------|---------|
+| [`@jubbio/auth`](packages/jubbio-auth) | Core SDK — vanilla JS, framework-agnostic | `npm i @jubbio/auth` |
+| [`@jubbio/auth-react`](packages/jubbio-auth-react) | React components and hooks | `npm i @jubbio/auth-react` |
 
-## Geliştirme
+## Development
 
 ```bash
 npm install
 npm run build
 ```
 
-## Yapı
+## Structure
 
 ```
 jubbio-sdk/
