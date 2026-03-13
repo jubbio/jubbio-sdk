@@ -9,11 +9,12 @@ import { generatePKCE, generateState } from './pkce';
 import { TokenStorage } from './storage';
 
 const DEFAULT_BASE_URL = 'https://api.jubbio.com';
+const DEFAULT_AUTHORIZE_URL = 'https://jubbio.com';
 const DEFAULT_SCOPES = ['identify'];
 
 export class JubbioAuth {
   private config: Required<
-    Pick<JubbioAuthConfig, 'clientId' | 'redirectUri' | 'baseUrl' | 'autoStore' | 'storagePrefix'>
+    Pick<JubbioAuthConfig, 'clientId' | 'redirectUri' | 'baseUrl' | 'authorizeUrl' | 'autoStore' | 'storagePrefix'>
   > & JubbioAuthConfig;
   private storage: TokenStorage;
 
@@ -23,6 +24,7 @@ export class JubbioAuth {
 
     this.config = {
       baseUrl: DEFAULT_BASE_URL,
+      authorizeUrl: DEFAULT_AUTHORIZE_URL,
       scopes: DEFAULT_SCOPES,
       popup: false,
       autoStore: true,
@@ -53,7 +55,7 @@ export class JubbioAuth {
       code_challenge_method: 'S256'
     });
 
-    const url = `${this.config.baseUrl}/api/v1/oauth2/authorize?${params.toString()}`;
+    const url = `${this.config.authorizeUrl}/oauth2/authorize?${params.toString()}`;
 
     if (this.config.popup) {
       this.openPopup(url);

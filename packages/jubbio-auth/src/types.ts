@@ -5,8 +5,10 @@ export interface JubbioAuthConfig {
   redirectUri: string;
   /** Requested OAuth2 scopes */
   scopes?: string[];
-  /** Jubbio API base URL (default: https://api.jubbio.com) */
+  /** Jubbio API base URL for token exchange and resource endpoints (default: https://api.jubbio.com) */
   baseUrl?: string;
+  /** Jubbio frontend URL for the consent/authorize page (default: https://jubbio.com) */
+  authorizeUrl?: string;
   /** Use popup instead of redirect (default: false) */
   popup?: boolean;
   /** Popup window dimensions */
