@@ -1,6 +1,7 @@
 {
   "name": "@jubbio/auth",
-  "version": "1.0.3",
+  "version": "1.0.4",
+  "type": "module",
   "description": "Jubbio OAuth2 SDK - Add 'Sign in with Jubbio' to your app",
   "main": "dist/jubbio-auth.cjs.js",
   "module": "dist/jubbio-auth.esm.js",

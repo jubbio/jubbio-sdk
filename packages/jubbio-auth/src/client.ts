@@ -8,7 +8,7 @@ import type {
 import { generatePKCE, generateState } from './pkce';
 import { TokenStorage } from './storage';
 
-const DEFAULT_BASE_URL = 'https://api.jubbio.com';
+const DEFAULT_BASE_URL = 'https://gateway.jubbio.com';
 const DEFAULT_AUTHORIZE_URL = 'https://jubbio.com';
 const DEFAULT_SCOPES = ['identify'];
 
